@@ -84,6 +84,7 @@ six==1.16.0
 smmap==5.0.1
 soupsieve==2.5
 stack-data==0.6.3
+statsmodel==0.14.1
 streamlit==1.31.1
 tenacity==8.2.3
 threadpoolctl==3.3.0
