@@ -104,7 +104,7 @@ st.plotly_chart(fig, use_container_width=True, height=700)
 
 #temp vs lat
 fig = px.scatter(filteredDf, x="Latitude", y="Temperature", 
-                color="Mangrove_Species", color_discrete_sequence=["forestgreen","lawngreen","limegreen"],
+                color="Mangrove_Species", color_discrete_sequence=["rgb(31, 119, 180)","rgb(255, 127, 14)","rgb(44, 160, 44)"],
                 title="Latitude vs Temprature")
 st.plotly_chart(fig, use_container_width=True,height=700)
 
@@ -117,14 +117,14 @@ st.plotly_chart(fig, use_container_width=True)
 # Scatter plot for Soil Moisture vs Salinity vs organic matter
 fig = px.scatter_matrix(filteredDf, dimensions=["Salinity", "Organic_Matter", "Soil_Moisture"], 
                         color="Mangrove_Species", 
-                        color_discrete_sequence=["blue","orange","green"],
+                        color_discrete_sequence=["rgb(31, 119, 180)","rgb(255, 127, 14)","rgb(44, 160, 44)"],
                         title="Soil Moisture vs Salinity vs Organic matter")
 st.plotly_chart(fig, use_container_width=True,height=700)
 
 # Calculate average plant height across different mangrove species
 fig = px.box(filteredDf, x="Mangrove_Species", y="Plant_Height", 
              color="Mangrove_Species", points="all",
-             title="Average plant height across different species")
+             title="Average plant height across different species", color_discrete_sequence=["forestgreen","lawngreen","limegreen"])
 st.plotly_chart(fig, use_container_width=True)
 
 #average growth rate
@@ -136,7 +136,7 @@ st.plotly_chart(fig, use_container_width=True)
 #soil moist vs precipitation
 #fig = px.scatter(filteredDf, x="Soil_Moisture", y="Precipitation", color="Mangrove_Species", size ='Growth_Rate', color_continuous_scale=px.colors.sequential.Viridis)
 fig = px.scatter(filteredDf, x="Soil_Moisture", y="Precipitation", 
-                 color="Mangrove_Species", size ='Growth_Rate', color_continuous_scale='Inferno',
+                 color="Mangrove_Species", size ='Growth_Rate', color_discrete_sequence=["forestgreen","lawngreen","limegreen"],
                  title="Soil Moisture vs Precipitation")
 st.plotly_chart(fig, use_container_width=True, height=700)
 
@@ -154,13 +154,13 @@ st.plotly_chart(fig, use_container_width=True,height=700)
 
 #tidal vs precipitation
 fig = px.scatter(filteredDf, x="Tidal_Inundation", y="Precipitation", 
-                 color="Soil_Moisture", size="Plant_Height", color_continuous_scale="viridis_r",
+                 color="Soil_Moisture", size="Plant_Height", color_continuous_scale="bugn_r",
                  title="Tidal Inundation vs Precipitation")
 st.plotly_chart(fig, use_container_width=True,height=700)
 
 #soil moisture vs water depth
 fig = px.scatter(filteredDf, x="Soil_Moisture", y="Water_Depth", 
-                 color="Water_Depth", size="Plant_Height", color_continuous_scale="oxy",
+                 color="Water_Depth", size="Plant_Height", color_continuous_scale="blues_r",
                  title="Soil Moisture vs Water Depth")
 st.plotly_chart(fig, use_container_width=True,height=700)
 
