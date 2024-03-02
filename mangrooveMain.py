@@ -91,32 +91,7 @@ with st.expander("Unit of measures"):
             '  \nGrowth Rate: Depending on the context, this could be measured in units of length per unit of time (e.g., meters per year). '
             '  \nPlant Height: Usually measured in meters (m) or centimeters (cm).')
 
-col1, col2 = st.columns((2))
-
 #corelation matrix
-#need to remove sns plot after discussion
-'''
-with col1:
-    #corelation using matplotlib
-    plt.xticks(rotation=DEFAULT_TEXT_ROTATION_DEGREES)
-    fig, ax = plt.subplots(figsize=(20,15))
-    sns.heatmap(filteredDf.corr(numeric_only = True), annot = True, cmap = DEFAULT_HEATMAP_COLOR, cbar = False, ax=ax)
-    #sns.heatmap(df.corr(numeric_only = True), annot = True, cbar = False, fmt=DEFAULT_FORMAT, cmap=DEFAULT_COLORMAP)
-    #fig.tight_layout()
-    st.write(fig, use_container_width=True,height=700)
-with col2:
-    fig = px.imshow(filteredDf.corr(numeric_only = True),labels=dict(color="Corelation"),
-                    color_continuous_scale=DEFAULT_HEATMAP_COLOR, text_auto=True, 
-                    title="Corelation matrix")
-    fig.update_layout(
-        font=dict(
-            #family="Courier New, monospace",
-            size=18
-        )
-    )
-    fig.update_layout(height=700)
-    st.plotly_chart(fig, use_container_width=True,height=700)
-'''
 fig = px.imshow(filteredDf.corr(numeric_only = True),labels=dict(color="Corelation"),
                 color_continuous_scale=DEFAULT_HEATMAP_COLOR, text_auto=True, 
                 title="Corelation matrix")
@@ -140,20 +115,6 @@ fig = px.scatter_mapbox(filteredDf, lat="Latitude", lon="Longitude", color="Mang
 st.plotly_chart(fig, use_container_width=True,height=700)
 
 #temp vs lat
-#need to remove sns part after discussion
-'''
-col11, col22 = st.columns((2))
-with col11:
-    fig, ax = plt.subplots(figsize=(20,15))
-    sns.scatterplot(data = filteredDf, x = 'Latitude', y ='Temperature', hue ='Mangrove_Species')
-    st.write(fig, use_container_width=True)
-with col22:
-    fig = px.scatter(filteredDf, x="Latitude", y="Temperature", 
-                     color="Mangrove_Species",color_continuous_scale="Viridis",
-                     title="Latitude vs Temprature")
-    st.plotly_chart(fig, use_container_width=True,height=700)
-'''
-
 fig = px.scatter(filteredDf, x="Latitude", y="Temperature", 
                 color="Mangrove_Species",color_continuous_scale="Viridis",
                 title="Latitude vs Temprature")
@@ -189,11 +150,6 @@ fig = px.scatter(filteredDf, x="Soil_Moisture", y="Precipitation",
                  color="Mangrove_Species", size ='Growth_Rate', color_continuous_scale='Inferno',
                  title="Soil Moisture vs Precipitation")
 st.plotly_chart(fig, use_container_width=True, height=700)
-
-#density vs temp -- no density column found in DF
-#fig = px.line(filteredDf, x="Temperature", y="Density", 
-#              title="Temperature vs Density", color='Mangrove_Species')
-#st.plotly_chart(fig, use_container_width=True, height=700)
 
 #join plot species vs humidity vs temp
 #note this needs statsmodels to be installed
@@ -233,6 +189,44 @@ st.plotly_chart(fig, use_container_width=True,height=700)
 
 
 ################ ignore below codes for SNS ###################
+
+#col1, col2 = st.columns((2))
+#with col1:
+#    #corelation using matplotlib
+#    plt.xticks(rotation=DEFAULT_TEXT_ROTATION_DEGREES)
+#    fig, ax = plt.subplots(figsize=(20,15))
+#    sns.heatmap(filteredDf.corr(numeric_only = True), annot = True, cmap = DEFAULT_HEATMAP_COLOR, cbar = False, ax=ax)
+#    #sns.heatmap(df.corr(numeric_only = True), annot = True, cbar = False, fmt=DEFAULT_FORMAT, cmap=DEFAULT_COLORMAP)
+#    #fig.tight_layout()
+#    st.write(fig, use_container_width=True,height=700)
+#with col2:
+#    fig = px.imshow(filteredDf.corr(numeric_only = True),labels=dict(color="Corelation"),
+#                    color_continuous_scale=DEFAULT_HEATMAP_COLOR, text_auto=True, 
+#                    title="Corelation matrix")
+#    fig.update_layout(
+#        font=dict(
+#            #family="Courier New, monospace",
+#            size=18
+#        )
+#    )
+#    fig.update_layout(height=700)
+#    st.plotly_chart(fig, use_container_width=True,height=700)
+
+#col11, col22 = st.columns((2))
+#with col11:
+#    fig, ax = plt.subplots(figsize=(20,15))
+#    sns.scatterplot(data = filteredDf, x = 'Latitude', y ='Temperature', hue ='Mangrove_Species')
+#    st.write(fig, use_container_width=True)
+#with col22:
+#    fig = px.scatter(filteredDf, x="Latitude", y="Temperature", 
+#                     color="Mangrove_Species",color_continuous_scale="Viridis",
+#                     title="Latitude vs Temprature")
+#    st.plotly_chart(fig, use_container_width=True,height=700)
+
+#density vs temp -- no density column found in DF
+#fig = px.line(filteredDf, x="Temperature", y="Density", 
+#              title="Temperature vs Density", color='Mangrove_Species')
+#st.plotly_chart(fig, use_container_width=True, height=700)
 
 #precipitation vs temp
 #fig, ax = plt.subplots(figsize=(20,15))

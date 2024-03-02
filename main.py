@@ -28,7 +28,6 @@ DEFAULT_FORMAT = '.0f' #not needed
 DEFAULT_TEXT_ROTATION_DEGREES = 80
 DEFAULT_HEATMAP_COLOR = 'viridis'
 
-
 # Define latitude and longitude ranges for each region
 regions = [
     {"name": "Central", "latitude": (24.5, 27.0), "longitude": (34.5, 37.5)},  # Central region
@@ -89,8 +88,6 @@ with st.expander("Unit of measures"):
             '  \nSoil Moisture: Typically measured as a percentage (%) or in volumetric water content (cm³/cm³). '
             '  \nGrowth Rate: Depending on the context, this could be measured in units of length per unit of time (e.g., meters per year). '
             '  \nPlant Height: Usually measured in meters (m) or centimeters (cm).')
-
-col1, col2 = st.columns((2))
 
 #corelation matrix
 #need to remove sns plot after discussion
