@@ -91,44 +91,33 @@ with st.expander("Unit of measures"):
             '  \nGrowth Rate: Depending on the context, this could be measured in units of length per unit of time (e.g., meters per year). '
             '  \nPlant Height: Usually measured in meters (m) or centimeters (cm).')
 
-#corelation matrix
-fig = px.imshow(filteredDf.corr(numeric_only = True),labels=dict(color="Corelation"),
-                color_continuous_scale=DEFAULT_HEATMAP_COLOR, text_auto=True, 
-                title="Corelation matrix")
-fig.update_layout(
-    font=dict(
-        #family="Courier New, monospace",
-        size=18
-    )
-)
-fig.update_layout(height=700)
-st.plotly_chart(fig, use_container_width=True,height=700)
-
 #osm mapbox plotting entire plant data
-#need to retain anyone after discussion
 #scatter map breaks sometimes after re-render
-st.map(filteredDf,latitude='Latitude',longitude='Longitude',
-       use_container_width=True,size=100,zoom=None)
-fig = px.scatter_mapbox(filteredDf, lat="Latitude", lon="Longitude", color="Mangrove_Species",
-                  color_continuous_scale=px.colors.cyclical.IceFire, size_max=15,
-                  zoom=3, mapbox_style="carto-positron")
-st.plotly_chart(fig, use_container_width=True,height=700)
+#st.map(filteredDf,latitude='Latitude',longitude='Longitude',
+#       use_container_width=True,size=100,zoom=None)
+#temp comm saves = mapbox_style="open-street-map"
+fig = px.scatter_mapbox(filteredDf, lat="Latitude", lon="Longitude", mapbox_style="carto-positron", 
+                  color="Mangrove_Species", color_discrete_sequence=["forestgreen","lawngreen","limegreen"], 
+                  size="Growth_Rate", size_max=15, zoom=9)
+fig.update_layout(mapbox=dict(bearing=0, center=dict(lat=20,lon=42),pitch=0,zoom=9))
+st.plotly_chart(fig, use_container_width=True, height=700)
 
 #temp vs lat
 fig = px.scatter(filteredDf, x="Latitude", y="Temperature", 
-                color="Mangrove_Species",color_continuous_scale="Viridis",
+                color="Mangrove_Species", color_discrete_sequence=["forestgreen","lawngreen","limegreen"],
                 title="Latitude vs Temprature")
 st.plotly_chart(fig, use_container_width=True,height=700)
 
 #plant height and growth distribution distribution
-fig = ff.create_distplot([filteredDf['Plant_Height'],filteredDf['Growth_Rate']], ['Plant Height','Growth Rate'], 
+fig = ff.create_distplot([filteredDf['Growth_Rate'],filteredDf['Plant_Height']], ['Growth Rate', 'Plant Height'], 
                          curve_type='kde')
+fig.update_layout(title='Growth against plant height') 
 st.plotly_chart(fig, use_container_width=True)
 
 # Scatter plot for Soil Moisture vs Salinity vs organic matter
 fig = px.scatter_matrix(filteredDf, dimensions=["Salinity", "Organic_Matter", "Soil_Moisture"], 
                         color="Mangrove_Species", 
-                        color_continuous_scale="viridis_r", 
+                        color_discrete_sequence=["blue","orange","green"],
                         title="Soil Moisture vs Salinity vs Organic matter")
 st.plotly_chart(fig, use_container_width=True,height=700)
 
@@ -141,7 +130,7 @@ st.plotly_chart(fig, use_container_width=True)
 #average growth rate
 fig = px.box(filteredDf, x="Mangrove_Species", y="Growth_Rate", 
              color="Mangrove_Species", points="all",
-             title="Average growth rates")
+             title="Average growth rates", color_discrete_sequence=["forestgreen","lawngreen","limegreen"])
 st.plotly_chart(fig, use_container_width=True)
 
 #soil moist vs precipitation
@@ -173,6 +162,19 @@ st.plotly_chart(fig, use_container_width=True,height=700)
 fig = px.scatter(filteredDf, x="Soil_Moisture", y="Water_Depth", 
                  color="Water_Depth", size="Plant_Height", color_continuous_scale="oxy",
                  title="Soil Moisture vs Water Depth")
+st.plotly_chart(fig, use_container_width=True,height=700)
+
+#corelation matrix
+fig = px.imshow(filteredDf.corr(numeric_only = True),labels=dict(color="Corelation"),
+                color_continuous_scale=DEFAULT_HEATMAP_COLOR, text_auto=True, 
+                title="Corelation matrix")
+fig.update_layout(
+    font=dict(
+        #family="Courier New, monospace",
+        size=18
+    )
+)
+fig.update_layout(height=700)
 st.plotly_chart(fig, use_container_width=True,height=700)
 
 # date vs temp
