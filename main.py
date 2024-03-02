@@ -3,7 +3,6 @@ import plotly.express as px
 import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
-import seaborn as sns
 import numpy as np
 import warnings
 import plotly.figure_factory as ff
@@ -48,14 +47,14 @@ def get_region(latitude, longitude):
     return "Unknown"
 
 #needed for standalone streamlite version
-#if importlib.util.find_spec("pyodide") is not None:
-#    url_contents = open_url(URL)
-#else:
-#    r = requests.get(URL)
-#    url_contents = StringIO(r.text)
-#df = pd.read_csv(url_contents, encoding="ISO-8859-1")
+if importlib.util.find_spec("pyodide") is not None:
+    url_contents = open_url(URL)
+else:
+    r = requests.get(URL)
+    url_contents = StringIO(r.text)
+df = pd.read_csv(url_contents, encoding="ISO-8859-1")
 
-df = pd.read_csv(URL, encoding="ISO-8859-1")
+#df = pd.read_csv(URL, encoding="ISO-8859-1")
 df['Date'] = pd.to_datetime(df['Date']) #clean datetime column
 df["Region"] = df.apply(lambda row: get_region(row["Latitude"], row["Longitude"]), axis=1) #generate region
 
@@ -95,28 +94,6 @@ col1, col2 = st.columns((2))
 
 #corelation matrix
 #need to remove sns plot after discussion
-'''
-with col1:
-    #corelation using matplotlib
-    plt.xticks(rotation=DEFAULT_TEXT_ROTATION_DEGREES)
-    fig, ax = plt.subplots(figsize=(20,15))
-    sns.heatmap(filteredDf.corr(numeric_only = True), annot = True, cmap = DEFAULT_HEATMAP_COLOR, cbar = False, ax=ax)
-    #sns.heatmap(df.corr(numeric_only = True), annot = True, cbar = False, fmt=DEFAULT_FORMAT, cmap=DEFAULT_COLORMAP)
-    #fig.tight_layout()
-    st.write(fig, use_container_width=True,height=700)
-with col2:
-    fig = px.imshow(filteredDf.corr(numeric_only = True),labels=dict(color="Corelation"),
-                    color_continuous_scale=DEFAULT_HEATMAP_COLOR, text_auto=True, 
-                    title="Corelation matrix")
-    fig.update_layout(
-        font=dict(
-            #family="Courier New, monospace",
-            size=18
-        )
-    )
-    fig.update_layout(height=700)
-    st.plotly_chart(fig, use_container_width=True,height=700)
-'''
 fig = px.imshow(filteredDf.corr(numeric_only = True),labels=dict(color="Corelation"),
                 color_continuous_scale=DEFAULT_HEATMAP_COLOR, text_auto=True, 
                 title="Corelation matrix")
@@ -130,30 +107,15 @@ fig.update_layout(height=700)
 st.plotly_chart(fig, use_container_width=True,height=700)
 
 #osm mapbox plotting entire plant data
-#need to retain anyone after discussion
 #scatter map breaks sometimes after re-render
-st.map(filteredDf,latitude='Latitude',longitude='Longitude',
-       use_container_width=True,size=100,zoom=None)
+#st.map(filteredDf,latitude='Latitude',longitude='Longitude',
+#       use_container_width=True,size=100,zoom=None)
 fig = px.scatter_mapbox(filteredDf, lat="Latitude", lon="Longitude", color="Mangrove_Species",
                   color_continuous_scale=px.colors.cyclical.IceFire, size_max=15,
                   zoom=3, mapbox_style="carto-positron")
 st.plotly_chart(fig, use_container_width=True,height=700)
 
 #temp vs lat
-#need to remove sns part after discussion
-'''
-col11, col22 = st.columns((2))
-with col11:
-    fig, ax = plt.subplots(figsize=(20,15))
-    sns.scatterplot(data = filteredDf, x = 'Latitude', y ='Temperature', hue ='Mangrove_Species')
-    st.write(fig, use_container_width=True)
-with col22:
-    fig = px.scatter(filteredDf, x="Latitude", y="Temperature", 
-                     color="Mangrove_Species",color_continuous_scale="Viridis",
-                     title="Latitude vs Temprature")
-    st.plotly_chart(fig, use_container_width=True,height=700)
-'''
-
 fig = px.scatter(filteredDf, x="Latitude", y="Temperature", 
                 color="Mangrove_Species",color_continuous_scale="Viridis",
                 title="Latitude vs Temprature")
