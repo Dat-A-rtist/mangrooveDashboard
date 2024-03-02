@@ -7,6 +7,7 @@ import numpy as np
 import warnings
 import plotly.figure_factory as ff
 import importlib
+import scipy
 from io import StringIO
 if importlib.util.find_spec("pyodide") is not None:
     from pyodide.http import open_url
