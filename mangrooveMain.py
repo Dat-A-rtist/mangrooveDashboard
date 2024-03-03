@@ -13,17 +13,17 @@ if importlib.util.find_spec("pyodide") is not None:
     from pyodide.http import open_url
 warnings.filterwarnings('ignore')
 
-#streamlit run .\mangrooveMain.py --server.port 8501
+#streamlit run .\mangroveMain.py --server.port 8501
 #pipreqs path
 #python -m pipreqs.pipreqs
 #pip3 freeze > requirements.txt
 #pip install -r requirements.txt 
 
 st.set_page_config(page_title="DatArtist Dashboard", page_icon=":bar_chart:", layout="wide")
-st.title(":bar_chart: Mangroove EDA")
+st.title(":bar_chart: mangrove EDA")
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 
-URL = 'https://raw.githubusercontent.com/Dat-A-rtist/mangrooveDashboard/main/synthetic_mangrove_dataset.csv'
+URL = 'https://raw.githubusercontent.com/Dat-A-rtist/mangroveDashboard/main/synthetic_mangrove_dataset.csv'
 DEFAULT_COLORMAP = "coolwarm_r" #not needed
 DEFAULT_FORMAT = '.0f' #not needed
 DEFAULT_TEXT_ROTATION_DEGREES = 80
@@ -68,7 +68,7 @@ else:
     regionDf = df[df["Region"].isin(region)]
 
 #Mangrove_Species
-species = st.sidebar.multiselect("Pick your mangroove species", df["Mangrove_Species"].unique())
+species = st.sidebar.multiselect("Pick your mangrove species", df["Mangrove_Species"].unique())
 if not species:
     filteredDf = regionDf.copy()
 else:
@@ -109,7 +109,7 @@ fig.update_layout(mapbox=dict(bearing=0, center=dict(lat=20,lon=42),pitch=0,zoom
 fig.update_layout(title=dict(text="<b>Map plots of mangrove</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16)
 st.plotly_chart(fig, use_container_width=True, height=700)
 ''' Magroove trees, also known as mangroves, are vital ecosystems found along coastal areas. 
-In Saudi Arabia, mangroove tree markers on maps typically indicate the presence of these unique habitats. 
+In Saudi Arabia, mangrove tree markers on maps typically indicate the presence of these unique habitats. 
 Mangroves serve as crucial buffers against coastal erosion, provide habitats for diverse marine life, and offer protection against storm surges. 
 These markers on maps signify areas where these ecosystems thrive, highlighting their significance for biodiversity conservation and coastal management in the Kingdom of Saudi Arabia.'''
 
