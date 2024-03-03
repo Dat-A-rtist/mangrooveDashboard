@@ -74,7 +74,13 @@ if not species:
 else:
     filteredDf = regionDf[regionDf["Mangrove_Species"].isin(species)] 
 
-with st.expander("Unit of measures"):
+with st.expander(":sparkles: Welcome to the Mangrove Analytical Dashboard"):
+    st.markdown("It's your gateway to exploring the height, moisture levels, species diversity, and growth rates within mangrove ecosystems through the power of Exploratory Data Analysis (EDA). "
+            "  \nMangroves, with their unique adaptations, play a crucial role in coastal environments, influencing factors such as sea level rise resilience and biodiversity. "
+            "  \nOur EDA approach dives deep into the data, providing insights into the varying heights of mangrove canopies, moisture content of soils, species distribution, and growth rates. "
+            "  \nJoin us as we navigate through interactive visualizations and analyses, shedding light on the intricate relationships between these key parameters and facilitating informed decision-making for mangrove conservation and management")
+
+with st.expander("Know your units!"):
     st.text('Latitude and Longitude: Typically measured in degrees (°) for geographic coordinates. '
             '  \nElevation: Usually measured in meters (m) above sea level. '
             '  \nTemperature: Commonly measured in degrees Celsius (°C) or Kelvin (K). '
@@ -100,74 +106,102 @@ fig = px.scatter_mapbox(filteredDf, lat="Latitude", lon="Longitude", mapbox_styl
                   color="Mangrove_Species", color_discrete_sequence=["forestgreen","lawngreen","limegreen"], 
                   size="Growth_Rate", size_max=15, zoom=9)
 fig.update_layout(mapbox=dict(bearing=0, center=dict(lat=20,lon=42),pitch=0,zoom=9))
+fig.update_layout(title=dict(text="<b>Map plots of mangrove</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16)
 st.plotly_chart(fig, use_container_width=True, height=700)
+''' Magroove trees, also known as mangroves, are vital ecosystems found along coastal areas. 
+In Saudi Arabia, mangroove tree markers on maps typically indicate the presence of these unique habitats. 
+Mangroves serve as crucial buffers against coastal erosion, provide habitats for diverse marine life, and offer protection against storm surges. 
+These markers on maps signify areas where these ecosystems thrive, highlighting their significance for biodiversity conservation and coastal management in the Kingdom of Saudi Arabia.'''
 
 #temp vs lat
 fig = px.scatter(filteredDf, x="Latitude", y="Temperature", 
-                color="Mangrove_Species", color_discrete_sequence=["rgb(31, 119, 180)","rgb(255, 127, 14)","rgb(44, 160, 44)"],
-                title="Latitude vs Temprature")
+                color="Mangrove_Species", color_discrete_sequence=["rgb(31, 119, 180)","rgb(255, 127, 14)","rgb(44, 160, 44)"])
+fig.update_layout(title=dict(text="<b>Latitude vs Temprature</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16)
 st.plotly_chart(fig, use_container_width=True,height=700)
+'''Latitude dictates the geographical range of mangroves, thriving within 25 degrees north to 25 degrees south of the equator. 
+Temperature influences their growth and distribution, with warm climates being favorable, but frost and extreme heat can be detrimental to mangrove health.'''
 
 #plant height and growth distribution distribution
 fig = ff.create_distplot([filteredDf['Growth_Rate'],filteredDf['Plant_Height']], ['Growth Rate', 'Plant Height'], 
                          curve_type='kde')
-fig.update_layout(title='Growth against plant height') 
+fig.update_layout(title=dict(text="<b>Growth against plant height'</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16) 
 st.plotly_chart(fig, use_container_width=True)
+'''The growth range of a plant typically corresponds to its optimal environmental conditions for growth, including factors like temperature, soil type, and sunlight exposure. 
+Plant height, on the other hand, varies depending on genetic traits, species, and environmental factors, often with taller plants requiring more space and resources to thrive. 
+Balancing these factors ensures successful cultivation and healthy development of plants in a given environment.'''
 
 # Scatter plot for Soil Moisture vs Salinity vs organic matter
 fig = px.scatter_matrix(filteredDf, dimensions=["Salinity", "Organic_Matter", "Soil_Moisture"], 
                         color="Mangrove_Species", 
-                        color_discrete_sequence=["rgb(31, 119, 180)","rgb(255, 127, 14)","rgb(44, 160, 44)"],
-                        title="Soil Moisture vs Salinity vs Organic matter")
+                        color_discrete_sequence=["rgb(31, 119, 180)","rgb(255, 127, 14)","rgb(44, 160, 44)"])
+fig.update_layout(title=dict(text="<b>Soil Moisture vs Salinity vs Organic matter</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16) 
 st.plotly_chart(fig, use_container_width=True,height=700)
+'''A scatter plot illustrating soil moisture, salinity, and organic matter provides a visual representation of their relationship in a given area. 
+Each point on the plot represents a specific soil sample, showing how moisture levels, salinity, and organic matter content vary across the sample set. 
+Analyzing this plot can reveal correlations, patterns, or potential trends between these important soil properties, aiding in agricultural or environmental assessments and decision-making processes.'''
 
 # Calculate average plant height across different mangrove species
 fig = px.box(filteredDf, x="Mangrove_Species", y="Plant_Height", 
-             color="Mangrove_Species", points="all",
-             title="Average plant height across different species", color_discrete_sequence=["forestgreen","lawngreen","limegreen"])
+             color="Mangrove_Species", points="all", color_discrete_sequence=["forestgreen","lawngreen","limegreen"])
+fig.update_layout(title=dict(text="<b>Average plant height across different species</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16)
 st.plotly_chart(fig, use_container_width=True)
+'''A graph representing mangrove tree height illustrates the vertical growth pattern of these unique coastal trees over time or across different environmental conditions.'''
 
 #average growth rate
 fig = px.box(filteredDf, x="Mangrove_Species", y="Growth_Rate", 
              color="Mangrove_Species", points="all",
-             title="Average growth rates", color_discrete_sequence=["forestgreen","lawngreen","limegreen"])
+             color_discrete_sequence=["forestgreen","lawngreen","limegreen"])
+fig.update_layout(title=dict(text="<b>Average growth rates</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16)
 st.plotly_chart(fig, use_container_width=True)
+'''A graph representing the growth rate of mangrove trees demonstrates the speed of their vertical development over time, providing insights into their dynamic growth patterns in various habitats.'''
 
 #soil moist vs precipitation
 #fig = px.scatter(filteredDf, x="Soil_Moisture", y="Precipitation", color="Mangrove_Species", size ='Growth_Rate', color_continuous_scale=px.colors.sequential.Viridis)
 fig = px.scatter(filteredDf, x="Soil_Moisture", y="Precipitation", 
-                 color="Mangrove_Species", size ='Growth_Rate', color_discrete_sequence=["forestgreen","lawngreen","limegreen"],
-                 title="Soil Moisture vs Precipitation")
+                 color="Mangrove_Species", size ='Growth_Rate', color_discrete_sequence=["forestgreen","lawngreen","limegreen"])
+fig.update_layout(title=dict(text="<b>Soil Moisture vs Precipitation</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16)
 st.plotly_chart(fig, use_container_width=True, height=700)
+'''A graph depicting soil moisture versus precipitation for mangrove trees showcases the correlation between rainfall levels and soil moisture content in their habitats, 
+offering insights into the ecological relationship between precipitation patterns and the water availability crucial for mangrove growth and survival.'''
 
 #join plot species vs humidity vs temp
 #note this needs statsmodels to be installed
-fig = px.scatter(filteredDf, x="Humidity", y="Temperature", color="Mangrove_Species", marginal_y="violin",
-           marginal_x="box", trendline="ols", template="simple_white")
+#fig = px.scatter(filteredDf, x="Humidity", y="Temperature", color="Mangrove_Species", marginal_y="violin",
+#           marginal_x="box", trendline="ols", template="simple_white")
+fig = px.scatter(filteredDf, x="Humidity", y="Temperature", color="Mangrove_Species", 
+                trendline="ols", template="simple_white")
+fig.update_layout(title=dict(text="<b>Humidity Vs Temperature'</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16) 
 st.plotly_chart(fig, use_container_width=True, height=700)
+'''The relationship between humidity and temperature for mangrove trees reflects their adaptation to specific coastal climates, highlighting how these factors influence their physiological processes and distribution in their natural habitats.'''
 
 #sunlight vs latitude
 fig = px.scatter(filteredDf, x="Latitude", y="Sunlight_Exposure", 
-                 color="Elevation", color_continuous_scale="Oranges",
-                 title="Latitude vs Sunlight")
+                 color="Elevation", color_continuous_scale="Oranges")
+fig.update_layout(title=dict(text="<b>Latitude vs Sunlight</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16)
 st.plotly_chart(fig, use_container_width=True,height=700)
+'''A graph plotting latitude against sunlight exposure for mangrove trees demonstrates how their distribution varies with changing latitudes, revealing patterns of sunlight availability crucial for their growth and ecological niche adaptation along region of Kingdom of Saudi Arabia'''
 
 #tidal vs precipitation
 fig = px.scatter(filteredDf, x="Tidal_Inundation", y="Precipitation", 
-                 color="Soil_Moisture", size="Plant_Height", color_continuous_scale="bugn_r",
-                 title="Tidal Inundation vs Precipitation")
+                 color="Soil_Moisture", size="Plant_Height", color_continuous_scale="bugn_r")
+fig.update_layout(title=dict(text="<b>Tidal Inundation vs Precipitation</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16)
 st.plotly_chart(fig, use_container_width=True,height=700)
+'''A graph depicting the relationship between tidal variation and precipitation for mangrove trees reveals how these environmental factors interact to shape the hydrological conditions crucial for the growth and resilience of mangrove ecosystems'''
 
 #soil moisture vs water depth
 fig = px.scatter(filteredDf, x="Soil_Moisture", y="Water_Depth", 
-                 color="Water_Depth", size="Plant_Height", color_continuous_scale="blues_r",
-                 title="Soil Moisture vs Water Depth")
+                 color="Water_Depth", size="Plant_Height", color_continuous_scale="blues_r")
+fig.update_layout(title=dict(text="<b>Soil Moisture vs Water Depth</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16)
 st.plotly_chart(fig, use_container_width=True,height=700)
+'''Mangroves thrive in areas where soil moisture levels are consistently high, often correlating with shallow water depths. 
+This symbiotic relationship ensures adequate water supply for root systems while also facilitating nutrient uptake. 
+However, excessive water depth can lead to waterlogging, hindering oxygen availability to roots and impeding growth. 
+Thus, an optimal balance between soil moisture and water depth is essential for the successful growth and sustainability of mangrove ecosystems.'''
 
 #corelation matrix
 fig = px.imshow(filteredDf.corr(numeric_only = True),labels=dict(color="Corelation"),
-                color_continuous_scale=DEFAULT_HEATMAP_COLOR, text_auto=True, 
-                title="Corelation matrix")
+                color_continuous_scale=DEFAULT_HEATMAP_COLOR, text_auto=True)
+fig.update_layout(title=dict(text="<b>Corelation matrix</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16)
 fig.update_layout(
     font=dict(
         #family="Courier New, monospace",
@@ -176,6 +210,11 @@ fig.update_layout(
 )
 fig.update_layout(height=700)
 st.plotly_chart(fig, use_container_width=True,height=700)
+'''A correlation matrix of mangrove data incorporates multiple factors to explore their interrelationships within the ecosystem. 
+By analyzing correlations between variables such as soil moisture, salinity, temperature, precipitation, sunlight exposure, and tidal variation, researchers can identify patterns and dependencies. 
+Strong positive correlations suggest variables that tend to increase or decrease together, indicating potential cause-effect relationships or shared environmental influences. 
+Conversely, negative correlations imply variables that change in opposite directions. 
+Understanding these correlations helps unveil the complex dynamics shaping mangrove ecosystems, aiding in conservation efforts and sustainable management strategies.'''
 
 # date vs temp
 #having lot of load time issue, breaking page sometimes
