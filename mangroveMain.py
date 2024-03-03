@@ -20,7 +20,7 @@ warnings.filterwarnings('ignore')
 #pip install -r requirements.txt 
 
 st.set_page_config(page_title="DatArtist Dashboard", page_icon=":bar_chart:", layout="wide")
-st.title(":bar_chart: mangrove EDA")
+st.title(":bar_chart: Mangrove Analytics - Exploratory Data Analysis")
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 
 URL = 'https://raw.githubusercontent.com/Dat-A-rtist/mangroveDashboard/main/synthetic_mangrove_dataset.csv'
