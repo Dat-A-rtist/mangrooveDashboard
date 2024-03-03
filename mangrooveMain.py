@@ -124,7 +124,7 @@ Temperature influences their growth and distribution, with warm climates being f
 #plant height and growth distribution distribution
 fig = ff.create_distplot([filteredDf['Growth_Rate'],filteredDf['Plant_Height']], ['Growth Rate', 'Plant Height'], 
                          curve_type='kde')
-fig.update_layout(title=dict(text="<b>Growth against plant height'</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16) 
+fig.update_layout(title=dict(text="<b>Growth against plant height</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16) 
 st.plotly_chart(fig, use_container_width=True)
 '''The growth range of a plant typically corresponds to its optimal environmental conditions for growth, including factors like temperature, soil type, and sunlight exposure. 
 Plant height, on the other hand, varies depending on genetic traits, species, and environmental factors, often with taller plants requiring more space and resources to thrive. 
@@ -170,7 +170,7 @@ offering insights into the ecological relationship between precipitation pattern
 #           marginal_x="box", trendline="ols", template="simple_white")
 fig = px.scatter(filteredDf, x="Humidity", y="Temperature", color="Mangrove_Species", 
                 trendline="ols", template="simple_white")
-fig.update_layout(title=dict(text="<b>Humidity Vs Temperature'</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16) 
+fig.update_layout(title=dict(text="<b>Humidity Vs Temperature</b>"), title_x=0.4, title_font_color="yellow", title_font_size=16) 
 st.plotly_chart(fig, use_container_width=True, height=700)
 '''The relationship between humidity and temperature for mangrove trees reflects their adaptation to specific coastal climates, highlighting how these factors influence their physiological processes and distribution in their natural habitats.'''
 
