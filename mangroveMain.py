@@ -220,7 +220,7 @@ Understanding these correlations helps unveil the complex dynamics shaping mangr
 st.text('')
 st.text('')
 st.markdown(
-    '`Create by` <a href="mailto:contact.datartist@gmail.com">Datartist</a>', unsafe_allow_html=True)
+    '`Created by` <a href="mailto:contact.datartist@gmail.com">Datartist</a>', unsafe_allow_html=True)
 
 # date vs temp
 #having lot of load time issue, breaking page sometimes
