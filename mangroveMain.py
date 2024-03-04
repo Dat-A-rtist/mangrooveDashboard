@@ -19,16 +19,16 @@ warnings.filterwarnings('ignore')
 #pip3 freeze > requirements.txt
 #pip install -r requirements.txt 
 
-st.set_page_config(page_title="DatArtist Dashboard", page_icon=":bar_chart:", layout="wide")
-st.title(":bar_chart: Mangrove Analytics - Exploratory Data Analysis")
-st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
-
 URL = 'https://raw.githubusercontent.com/Dat-A-rtist/mangroveDashboard/main/synthetic_mangrove_dataset.csv'
+logo_url = "resources/daLogo.jpg"
 DEFAULT_COLORMAP = "coolwarm_r" #not needed
 DEFAULT_FORMAT = '.0f' #not needed
 DEFAULT_TEXT_ROTATION_DEGREES = 80
 DEFAULT_HEATMAP_COLOR = 'viridis'
 
+st.set_page_config(page_title="DatArtist Mangrove EDA", page_icon=":seedling:")
+st.title(":seedling: Mangrove Analytics - Exploratory Data Analysis")
+st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 
 # Define latitude and longitude ranges for each region
 regions = [
@@ -59,6 +59,7 @@ df = pd.read_csv(URL, encoding="ISO-8859-1")
 df['Date'] = pd.to_datetime(df['Date']) #clean datetime column
 df["Region"] = df.apply(lambda row: get_region(row["Latitude"], row["Longitude"]), axis=1) #generate region
 
+st.sidebar.image(logo_url)
 st.sidebar.header("Choose your filters")
 #region
 region = st.sidebar.multiselect("Pick your region", df["Region"].unique())
