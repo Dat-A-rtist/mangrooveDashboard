@@ -217,6 +217,11 @@ Strong positive correlations suggest variables that tend to increase or decrease
 Conversely, negative correlations imply variables that change in opposite directions. 
 Understanding these correlations helps unveil the complex dynamics shaping mangrove ecosystems, aiding in conservation efforts and sustainable management strategies.'''
 
+st.text('')
+st.text('')
+st.markdown(
+    '`Create by` <a href="mailto:contact.datartist@gmail.com">Datartist</a>', unsafe_allow_html=True)
+
 # date vs temp
 #having lot of load time issue, breaking page sometimes
 #fig = px.line(filteredDf, x="Date", y="Temperature")
