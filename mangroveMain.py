@@ -27,7 +27,7 @@ DEFAULT_TEXT_ROTATION_DEGREES = 80
 DEFAULT_HEATMAP_COLOR = 'viridis'
 
 st.set_page_config(page_title="DatArtist Mangrove EDA", page_icon=":seedling:")
-st.title(":seedling: Mangrove Analytics - Exploratory Data Analysis")
+st.title(":seedling: Exploratory Data Analysis (EDA)")
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 
 # Define latitude and longitude ranges for each region
@@ -59,8 +59,11 @@ df = pd.read_csv(URL, encoding="ISO-8859-1")
 df['Date'] = pd.to_datetime(df['Date']) #clean datetime column
 df["Region"] = df.apply(lambda row: get_region(row["Latitude"], row["Longitude"]), axis=1) #generate region
 
+#sidebar section
 st.sidebar.image(logo_url)
+#st.sidebar.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 st.sidebar.header("Choose your filters")
+
 #region
 region = st.sidebar.multiselect("Pick your region", df["Region"].unique())
 if not region:
@@ -75,28 +78,37 @@ if not species:
 else:
     filteredDf = regionDf[regionDf["Mangrove_Species"].isin(species)] 
 
-with st.expander(":sparkles: Welcome to the Mangrove Analytical Dashboard"):
-    st.markdown("It's your gateway to exploring the height, moisture levels, species diversity, and growth rates within mangrove ecosystems through the power of Exploratory Data Analysis (EDA). "
-            "  \nMangroves, with their unique adaptations, play a crucial role in coastal environments, influencing factors such as sea level rise resilience and biodiversity. "
-            "  \nOur EDA approach dives deep into the data, providing insights into the varying heights of mangrove canopies, moisture content of soils, species distribution, and growth rates. "
-            "  \nJoin us as we navigate through interactive visualizations and analyses, shedding light on the intricate relationships between these key parameters and facilitating informed decision-making for mangrove conservation and management")
+st.sidebar.header("Know your units!")
+with st.sidebar.expander(" "):
+    st.write('**:orange[Latitude and Longitude:]** degrees (°)'
+            '  \n**:orange[Elevation:]** meters (m)'
+            '  \n**:orange[Temperature:]** Celsius (°C)'
+            '  \n**:orange[Precipitation:]** millimeters (mm)'
+            '  \n**:orange[Humidity:]** percentage (%). '
+            '  \n**:orange[Sunlight Exposure:]** watt per square meter (W/m²)'
+            '  \n**:orange[Soil pH:]** pH '
+            '  \n**:orange[Salinity:]** practical salinity units (psu). '
+            '  \n**:orange[N, P, K:]** parts per million (ppm)'
+            '  \n**:orange[Organic Matter:]** grams per kilogram (g/kg). '
+            '  \n**:orange[Tidal Inundation:]** percentage of time'
+            '  \n**:orange[Water Depth:]** meters (m)'
+            '  \n**:orange[Soil Moisture:]** volumetric water content (cm³/cm³). '
+            '  \n**:orange[Growth Rate:]** meters per year'
+            '  \n**:orange[Plant Height:]** meters (m)')
 
-with st.expander("Know your units!"):
-    st.text('Latitude and Longitude: Typically measured in degrees (°) for geographic coordinates. '
-            '  \nElevation: Usually measured in meters (m) above sea level. '
-            '  \nTemperature: Commonly measured in degrees Celsius (°C) or Kelvin (K). '
-            '  \nPrecipitation: Often measured in millimeters (mm) or inches (in) of rainfall. '
-            '  \nHumidity: Usually expressed as a percentage (%). '
-            '  \nSunlight Exposure: This can vary depending on the context. It might be measured in lux, watt per square meter (W/m²), or another unit related to illuminance or irradiance. '
-            '  \nSoil pH: pH is a dimensionless quantity representing the acidity or alkalinity of soil. '
-            '  \nSalinity: Usually measured in parts per thousand (ppt) or practical salinity units (psu). '
-            '  \nNitrogen, Phosphorus, Potassium: These are typically measured in parts per million (ppm) or milligrams per kilogram (mg/kg). '
-            '  \nOrganic Matter: Often measured in percentage (%) or grams per kilogram (g/kg). '
-            '  \nTidal Inundation: This might be expressed as a percentage of time or as a dimensionless ratio. '
-            '  \nWater Depth: Usually measured in meters (m) or centimeters (cm). '
-            '  \nSoil Moisture: Typically measured as a percentage (%) or in volumetric water content (cm³/cm³). '
-            '  \nGrowth Rate: Depending on the context, this could be measured in units of length per unit of time (e.g., meters per year). '
-            '  \nPlant Height: Usually measured in meters (m) or centimeters (cm).')
+#end of side bar components
+
+#with st.expander(":sparkles: Welcome to the Mangrove Analytical Dashboard"):
+#    st.markdown("It's your gateway to exploring the height, moisture levels, species diversity, and growth rates within mangrove ecosystems through the power of Exploratory Data Analysis (EDA). "
+#            "  \nMangroves, with their unique adaptations, play a crucial role in coastal environments, influencing factors such as sea level rise resilience and biodiversity. "
+#            "  \nOur EDA approach dives deep into the data, providing insights into the varying heights of mangrove canopies, moisture content of soils, species distribution, and growth rates. "
+#            "  \nJoin us as we navigate through interactive visualizations and analyses, shedding light on the intricate relationships between these key parameters and facilitating informed decision-making for mangrove conservation and management")
+
+st.write(":sparkles: **:orange[Welcome to the Mangrove Analytical Dashboard]**")
+st.write("Mangroves, with their unique adaptations, play a crucial role in coastal environments, influencing factors such as sea level rise resilience and biodiversity. ")
+st.write("Our dashboard will be your gateway to exploring various aspects such as the height, moisture levels, species diversity, and growth rates within mangrove ecosystems through the power of Exploratory Data Analysis (EDA). ")
+st.write("Data used in this dashboard was synthetically generated using the power of AI considering researched parameters range to simulate real world relationship")
+st.write("Join us as we navigate through interactive visualizations and analyses, shedding light on the intricate relationships between these key parameters and facilitating informed decision-making for mangrove conservation and management")
 
 #osm mapbox plotting entire plant data
 #scatter map breaks sometimes after re-render
