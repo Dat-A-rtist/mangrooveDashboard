@@ -107,7 +107,7 @@ with st.sidebar.expander(" "):
 st.write(":sparkles: **:orange[Welcome to the Mangrove Analytical Dashboard]**")
 st.write("Mangroves, with their unique adaptations, play a crucial role in coastal environments, influencing factors such as sea level rise resilience and biodiversity. ")
 st.write("Our dashboard will be your gateway to exploring various aspects such as the height, moisture levels, species diversity, and growth rates within mangrove ecosystems through the power of Exploratory Data Analysis (EDA). ")
-st.write("Data used in this dashboard was synthetically generated using the power of AI considering researched parameters range to simulate real world relationship")
+st.write("Data used in this dashboard was synthetically generated with the help of known researched parameter ranges and it tries to simulate real world relationships between some crucial features for mangrove plant")
 st.write("Join us as we navigate through interactive visualizations and analyses, shedding light on the intricate relationships between these key parameters and facilitating informed decision-making for mangrove conservation and management")
 
 #osm mapbox plotting entire plant data
